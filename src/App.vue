@@ -4,8 +4,10 @@ import { RouterView } from "vue-router";
 
 <template>
   <header></header>
-
-  <RouterView />
+  <Suspense>
+    <RouterView />
+    <template #fallback> Loading... </template>
+  </Suspense>
 </template>
 
 <style scoped>

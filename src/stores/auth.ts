@@ -3,6 +3,9 @@ import type { UserInfo } from "firebase/auth";
 import { defineStore } from "pinia";
 import { computed, reactive, shallowRef } from "vue";
 import type { Writable } from "@/types";
+import { getFromSessionStorage, setSessionStorage } from "@/utils/storage";
+
+const SESSION_STORAGE_KEY = "user";
 
 export const useAuth = defineStore("auth", () => {
   const createDefaultUser = () => ({
@@ -14,7 +17,11 @@ export const useAuth = defineStore("auth", () => {
     providerId: "",
   });
 
-  const user = shallowRef<Writable<UserInfo>>(createDefaultUser());
+  const storedUser = getFromSessionStorage<UserInfo>(SESSION_STORAGE_KEY);
+
+  const user = shallowRef<Writable<UserInfo>>(
+    storedUser ?? createDefaultUser()
+  );
   const loadings = reactive({ signIn: false, signOut: false, signUp: false });
   const errors = reactive({ signIn: "", signOut: "", signUp: "" });
 
@@ -26,6 +33,7 @@ export const useAuth = defineStore("auth", () => {
 
   const setUser = (newUser: UserInfo) => {
     user.value = newUser;
+    setSessionStorage(SESSION_STORAGE_KEY, newUser);
   };
 
   const signUp = async (email: string, password: string) => {

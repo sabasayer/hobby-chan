@@ -38,8 +38,11 @@ const signOut = async () => {
   }
 };
 
+const getCurrentUser = () => auth.currentUser;
+
 export const AuthMethods = {
   signIn,
   signUp,
   signOut,
+  getCurrentUser,
 };
