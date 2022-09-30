@@ -1,0 +1,16 @@
+{
+    "Hobbies": "Hobbies",
+    "AddNewHobby": "Add New Hobby",
+    "Status":"Status",
+    "status":{
+      "Planning":"Planning",
+      "Started":"Started",
+      "Paused":"Paused",
+      "Finished":"Finished",
+      "Abondoned":"Abondoned"
+    },
+    "Category":"Category",
+    "Create":"Create",
+    "Name":"Name",
+    "NewHobby":"New Hobby"
+  }

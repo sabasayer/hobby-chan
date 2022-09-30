@@ -1,0 +1,16 @@
+{
+    "Hobbies": "Hobiler",
+    "AddNewHobby": "Yeni Hobi Ekle",
+    "Status":"Durum",
+    "status":{
+      "Planning":"Planlanıyor",
+      "Started":"Başladı",
+      "Paused":"Durdu",
+      "Finished":"Bitti",
+      "Abondoned":"Terkedildi"
+    },
+    "Category":"Kategori",
+    "Create":"Oluştur",
+    "Name":"Adı",
+    "NewHobby":"Yeni Hobi"
+}

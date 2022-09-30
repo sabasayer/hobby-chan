@@ -5,3 +5,11 @@ export interface HobbyCategory {
   hobbyType: string;
   name: string;
 }
+
+export interface Hobby {
+  id?: string;
+  category: string;
+  name: string;
+  startDate: Date;
+  status: string;
+}

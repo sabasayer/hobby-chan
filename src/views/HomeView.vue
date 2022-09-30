@@ -2,6 +2,7 @@
 import Dialog from "primevue/dialog";
 import { ref } from "vue";
 import NewHobbyForm from "../components/hobby/NewHobbyForm.vue";
+import HobbyList from "../components/hobby/HobbyList.vue";
 
 const isModalVisible = ref(false);
 
@@ -10,18 +11,21 @@ const open = () => (isModalVisible.value = true);
 
 <template>
   <main class="p-3">
-    <h1>Hobbies</h1>
+    <h1>{{ $t("Hobbies") }}</h1>
     <PButton
       @click="open"
-      label="Add new hobby"
+      :label="$t('AddNewHobby')"
       icon="pi pi-plus"
       class="p-button-large"
     />
+
+    <HobbyList />
+
     <Dialog
       v-model:visible="isModalVisible"
       modal
       maximizable
-      header="New Hobby"
+      :header="$t('NewHobby')"
     >
       <NewHobbyForm />
     </Dialog>

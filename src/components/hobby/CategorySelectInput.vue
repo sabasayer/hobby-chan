@@ -32,8 +32,11 @@ const select = (category: string) => emit("update:modelValue", category);
             v-for="category in categories"
             :key="category.name"
             :label="category.name"
-            :class="{ 'bg-primary': isSelected(category.name) }"
-            class="cursor-pointer"
+            :class="{
+              'bg-gray': isSelected(category.name),
+              'bg-white': !isSelected(category.name),
+            }"
+            class="cursor-pointer border-1 border-300"
             @click="select(category.name)"
           />
         </div>
