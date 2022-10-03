@@ -13,3 +13,9 @@ export interface Hobby {
   startDate: Date;
   status: string;
 }
+
+export interface HobbyStatusLog {
+  id?: string;
+  hobbyId: string;
+  status: string;
+}

@@ -11,6 +11,11 @@
     },
     "Category":"Kategori",
     "Create":"Oluştur",
+    "Update":"Güncelle",
+    "Edit":"Güncelle",
+    "Remove":"Sil",
     "Name":"Adı",
-    "NewHobby":"Yeni Hobi"
+    "NewHobby":"Yeni Hobi",
+    "StartDate":"Başlangıç Tarihi",
+    "Calendar":"Takvim"
 }

@@ -1,21 +1,31 @@
 <script lang="ts" setup>
 import ProgressBar from "primevue/progressbar";
 import DataView from "primevue/dataview";
-import Card from "primevue/card";
+import DataViewLayoutOptions from "primevue/dataviewlayoutoptions";
 
-import { useHobby } from "@/composables/useHobby";
+import { useHobby } from "@/stores/hobby";
 import { ref } from "vue";
+import HobbyCard from "./HobbyCard.vue";
+import { storeToRefs } from "pinia";
+import type { Hobby } from "@/types";
+import HobbyCalendar from "./HobbyCalendar.vue";
 
-const { error, get, hobbies, loading } = useHobby();
+const emit = defineEmits<{ (e: "edit", value: Hobby): void }>();
+
+const store = useHobby();
+const { loadings, errors, hobbies } = storeToRefs(store);
+const { get } = store;
 const layout = ref("grid");
 
 await get();
+
+const edit = (data: Hobby) => emit("edit", data);
 </script>
 
 <template>
   <div class="py-3">
-    <ProgressBar v-if="loading" mode="indeterminate" />
-    <h1 v-if="error" class="p-error">{{ error }}</h1>
+    <ProgressBar v-if="loadings.get" mode="indeterminate" />
+    <h1 v-if="errors.get" class="p-error">{{ errors.get }}</h1>
     <DataView
       :value="hobbies"
       :layout="layout"
@@ -23,43 +33,23 @@ await get();
       paginator
       :rows="12"
     >
+      <template #header>
+        <div class="flex justify-content-end">
+          <DataViewLayoutOptions v-model="layout" />
+        </div>
+      </template>
       <template #grid="{ data }">
-        <div>
-          <Card>
-            <template #header>
-              <h2 class="px-3 pt-3 text-gray-600">
-                {{ data.name }}
-              </h2>
-            </template>
-            <template #content>
-              <div>{{ data.status }}</div>
-              <div>{{ data.category }}</div>
-              <div>{{ new Date(data.startDate.seconds) }}</div>
-            </template>
-            <template #footer>
-              <div class="flex justify-content-end gap-3">
-                <PButton
-                  icon="pi pi-file-edit"
-                  label="Edit"
-                  class="p-button-secondary p-button-sm"
-                />
-                <PButton
-                  icon="pi pi-trash"
-                  label="Remove"
-                  class="p-button-secondary p-button-sm"
-                />
-              </div>
-            </template>
-          </Card>
+        <div class="col-4 p-1">
+          <HobbyCard :data="data" @edit="edit" />
+        </div>
+      </template>
+      <template #list="{ data }">
+        <div class="w-full">
+          <HobbyCard :data="data" horizontal @edit="edit" />
         </div>
       </template>
     </DataView>
+
+    <HobbyCalendar v-if="hobbies.length" :hobbies="hobbies" class="mt-3" />
   </div>
 </template>
-<style scoped lang="scss">
-@import "primeflex/primeflex.scss";
-
-::v-deep(.p-dataview-grid .p-grid) {
-  @include styleclass("gap-3");
-}
-</style>

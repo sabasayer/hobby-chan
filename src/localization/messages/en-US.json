@@ -11,6 +11,11 @@
     },
     "Category":"Category",
     "Create":"Create",
+    "Update":"Update",
+    "Edit":"Edit",
+    "Remove":"Remove",
     "Name":"Name",
-    "NewHobby":"New Hobby"
+    "NewHobby":"New Hobby",
+    "StartDate":"Start Date",
+    "Calendar":"Calendar"
   }

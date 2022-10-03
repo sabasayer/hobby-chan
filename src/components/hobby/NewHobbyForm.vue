@@ -5,22 +5,27 @@ import CategorySelectInput from "./CategorySelectInput.vue";
 import SelectButton from "primevue/selectbutton";
 import InputText from "primevue/inputtext";
 import Calendar from "primevue/calendar";
-import { useHobby } from "@/composables/useHobby";
+import { useHobby } from "@/stores/hobby";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import ErrorMessages from "../form/ErrorMessages.vue";
-import { addHobby } from "@/api";
+import { useToast } from "primevue/usetoast";
 
-const { statusList } = useHobby();
+const { statusList, save, loadings, errors } = useHobby();
+const toast = useToast();
 
-const loading = ref(false);
+const emit = defineEmits<{ (e: "submitted"): void }>();
+const props = defineProps<{ editingHobby?: Hobby }>();
+
 const submitted = ref(false);
-const hobby = reactive<Hobby>({
-  name: "",
-  category: "",
-  startDate: new Date(),
-  status: "",
-});
+const hobby = reactive<Hobby>(
+  props.editingHobby ?? {
+    name: "",
+    category: "",
+    startDate: new Date(),
+    status: "",
+  }
+);
 
 const rules = {
   name: { required },
@@ -36,9 +41,14 @@ const handleSubmit = async () => {
   const isValid = await $v.value.$validate();
   if (!isValid) return;
 
-  loading.value = true;
-  await addHobby(hobby);
-  loading.value = false;
+  await save(hobby);
+  if (errors.save) {
+    toast.add({
+      severity: "error",
+      summary: "Save error",
+      detail: errors.save,
+    });
+  } else emit("submitted");
 };
 </script>
 
@@ -76,7 +86,7 @@ const handleSubmit = async () => {
     </section>
 
     <section>
-      <h3>{{ $t("Start Date") }}</h3>
+      <h3>{{ $t("StartDate") }}</h3>
       <Calendar
         v-model="$v.startDate.$model"
         date-format="dd.mm.yy"
@@ -89,9 +99,9 @@ const handleSubmit = async () => {
     <div class="flex justify-content-end pt-3">
       <PButton
         type="submit"
-        :label="$t('Create')"
-        icon="pi pi-plus"
-        :loading="loading"
+        :label="editingHobby ? $t('Update') : $t('Create')"
+        :icon="editingHobby ? 'pi pi-save' : 'pi pi-plus'"
+        :loading="loadings.save"
       />
     </div>
   </form>

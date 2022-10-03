@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import type { Hobby } from "@/types";
 import Dialog from "primevue/dialog";
 import { ref } from "vue";
-import NewHobbyForm from "../components/hobby/NewHobbyForm.vue";
 import HobbyList from "../components/hobby/HobbyList.vue";
+import NewHobbyForm from "../components/hobby/NewHobbyForm.vue";
 
 const isModalVisible = ref(false);
+const editingHobby = ref<Hobby | undefined>();
 
 const open = () => (isModalVisible.value = true);
+const close = () => (isModalVisible.value = false);
+
+const edit = (data: Hobby) => {
+  editingHobby.value = data;
+  open();
+};
 </script>
 
 <template>
@@ -19,7 +27,7 @@ const open = () => (isModalVisible.value = true);
       class="p-button-large"
     />
 
-    <HobbyList />
+    <HobbyList @edit="edit" />
 
     <Dialog
       v-model:visible="isModalVisible"
@@ -27,7 +35,7 @@ const open = () => (isModalVisible.value = true);
       maximizable
       :header="$t('NewHobby')"
     >
-      <NewHobbyForm />
+      <NewHobbyForm @submitted="close" :editing-hobby="editingHobby" />
     </Dialog>
   </main>
 </template>

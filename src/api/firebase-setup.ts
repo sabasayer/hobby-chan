@@ -13,7 +13,8 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 
-self.FIREBASE_APPCHECK_DEBUG_TOKEN = "646F591E-808C-43E6-87C6-E675F2B7023C";
+(self as any).FIREBASE_APPCHECK_DEBUG_TOKEN =
+  "646F591E-808C-43E6-87C6-E675F2B7023C";
 initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider("abcdefghijklmnopqrstuvwxy-1234567890abcd"),
   isTokenAutoRefreshEnabled: true,
