@@ -9,6 +9,7 @@ import HobbyCard from "./HobbyCard.vue";
 import { storeToRefs } from "pinia";
 import type { Hobby } from "@/types";
 import HobbyCalendar from "./HobbyCalendar.vue";
+import HobbyTable from "./HobbyTable.vue";
 
 const emit = defineEmits<{ (e: "edit", value: Hobby): void }>();
 
@@ -51,5 +52,6 @@ const edit = (data: Hobby) => emit("edit", data);
     </DataView>
 
     <HobbyCalendar v-if="hobbies.length" :hobbies="hobbies" class="mt-3" />
+    <HobbyTable v-if="hobbies.length" :hobbies="hobbies" class="mt-3" />
   </div>
 </template>

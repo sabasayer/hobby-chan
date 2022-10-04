@@ -3,11 +3,11 @@
     "AddNewHobby": "Add New Hobby",
     "Status":"Status",
     "status":{
-      "Planning":"Planning",
-      "Started":"Started",
-      "Paused":"Paused",
-      "Finished":"Finished",
-      "Abondoned":"Abondoned"
+      "planning":"Planning",
+      "started":"Started",
+      "paused":"Paused",
+      "finished":"Finished",
+      "abondoned":"Abondoned"
     },
     "Category":"Category",
     "Create":"Create",
@@ -17,5 +17,8 @@
     "Name":"Name",
     "NewHobby":"New Hobby",
     "StartDate":"Start Date",
-    "Calendar":"Calendar"
+    "Calendar":"Calendar",
+    "ChangeStatus":"Change Status",
+    "TableEmpty":"There is no item that relates with your filters",
+    "Actions":"Actions"
   }

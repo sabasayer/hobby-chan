@@ -1,23 +1,42 @@
 <script lang="ts" setup>
-import type { Hobby } from "@/types";
-import { defineProps, unref } from "vue";
+import type { Hobby, StatusType } from "@/types";
+import { defineProps, ref, unref } from "vue";
 import Card from "primevue/card";
+import Menu from "primevue/menu";
 import { useHobby } from "@/stores/hobby";
-import { useToast } from "primevue/usetoast";
+import { computed } from "vue";
+import { statusIconMap, StatusList } from "@/utils/consts";
+import type { MenuItem } from "primevue/menuitem";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps<{ data: Hobby; horizontal?: boolean }>();
 const emit = defineEmits<{ (e: "edit", value: Hobby): void }>();
 
-const { remove, errors, loadings } = useHobby();
-const { add } = useToast();
+const { remove, save, loadings } = useHobby();
+const { t } = useI18n({ inheritLocale: true });
+
+const menu = ref();
 
 const removeHobby = async () => {
   await remove(unref(props.data));
-  if (errors.remove)
-    add({ severity: "error", summary: "Remove Error", detail: errors.remove });
 };
 
 const edit = () => emit("edit", props.data);
+const changeStatus = async (status: StatusType) => {
+  menu.value.toggle();
+  await save({ ...props.data, status });
+};
+const toggleMenu = (event: MouseEvent) => menu.value.toggle(event);
+
+const statusIcon = computed(() => statusIconMap[props.data.status]);
+
+const statusList = computed<MenuItem[]>(() =>
+  StatusList.filter((e) => e !== props.data.status).map((e) => ({
+    label: t(`status.${e}`),
+    icon: `pi ${statusIconMap[e]}`,
+    command: () => changeStatus(e),
+  }))
+);
 </script>
 
 <template>
@@ -29,13 +48,23 @@ const edit = () => emit("edit", props.data);
     </template>
     <template #content>
       <div :class="{ 'flex gap-3': horizontal }">
-        <div>{{ data.status }}</div>
+        <div>
+          <i class="pi mr-2" :class="statusIcon"></i>
+          <span>{{ data.status }}</span>
+        </div>
         <div>{{ data.category }}</div>
         <div>{{ data.startDate.toDateString() }}</div>
       </div>
     </template>
     <template #footer>
       <div class="flex justify-content-end gap-3">
+        <PButton
+          class="p-button-raised p-button-text p-button-sm"
+          :label="$t('ChangeStatus')"
+          :loading="loadings.save"
+          @click="toggleMenu"
+        />
+        <Menu ref="menu" id="status_menu" popup :model="statusList" />
         <PButton
           icon="pi pi-file-edit"
           :label="$t('Edit')"

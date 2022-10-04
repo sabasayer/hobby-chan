@@ -3,11 +3,11 @@
     "AddNewHobby": "Yeni Hobi Ekle",
     "Status":"Durum",
     "status":{
-      "Planning":"Planlanıyor",
-      "Started":"Başladı",
-      "Paused":"Durdu",
-      "Finished":"Bitti",
-      "Abondoned":"Terkedildi"
+      "planning":"Planlanıyor",
+      "started":"Başladı",
+      "paused":"Durdu",
+      "finished":"Bitti",
+      "abondoned":"Terkedildi"
     },
     "Category":"Kategori",
     "Create":"Oluştur",
@@ -17,5 +17,8 @@
     "Name":"Adı",
     "NewHobby":"Yeni Hobi",
     "StartDate":"Başlangıç Tarihi",
-    "Calendar":"Takvim"
+    "Calendar":"Takvim",
+    "ChangeStatus":"Durum Değiştir",
+    "TableEmpty":"Aradığınız sonuçla ilgili bir hobby yok",
+    "Actions":"Aksiyonlar"
 }

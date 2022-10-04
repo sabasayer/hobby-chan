@@ -9,22 +9,22 @@ import { useHobby } from "@/stores/hobby";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import ErrorMessages from "../form/ErrorMessages.vue";
-import { useToast } from "primevue/usetoast";
 
 const { statusList, save, loadings, errors } = useHobby();
-const toast = useToast();
 
 const emit = defineEmits<{ (e: "submitted"): void }>();
 const props = defineProps<{ editingHobby?: Hobby }>();
 
 const submitted = ref(false);
 const hobby = reactive<Hobby>(
-  props.editingHobby ?? {
-    name: "",
-    category: "",
-    startDate: new Date(),
-    status: "",
-  }
+  props.editingHobby
+    ? { ...props.editingHobby }
+    : {
+        name: "",
+        category: "",
+        startDate: new Date(),
+        status: "planning",
+      }
 );
 
 const rules = {
@@ -42,13 +42,9 @@ const handleSubmit = async () => {
   if (!isValid) return;
 
   await save(hobby);
-  if (errors.save) {
-    toast.add({
-      severity: "error",
-      summary: "Save error",
-      detail: errors.save,
-    });
-  } else emit("submitted");
+  if (!errors.save) {
+    emit("submitted");
+  }
 };
 </script>
 

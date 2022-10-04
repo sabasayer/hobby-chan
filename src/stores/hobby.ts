@@ -1,17 +1,20 @@
 import { addHobby, getHobbies, removeHobby, updateHobby } from "@/api";
 import type { Hobby } from "@/types";
 import { defineStore } from "pinia";
+import { useToast } from "primevue/usetoast";
 import { computed, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 export const useHobby = defineStore("hobby", () => {
   const { t } = useI18n({ inheritLocale: true });
+  const toast = useToast();
+
   const statusList = computed(() => [
-    { name: t("status.Planning"), code: "started" },
-    { name: t("status.Started"), code: "started" },
-    { name: t("status.Paused"), code: "paused" },
-    { name: t("status.Finished"), code: "finished" },
-    { name: t("status.Abondoned"), code: "abondoned" },
+    { name: t("status.planning"), code: "planning" },
+    { name: t("status.started"), code: "started" },
+    { name: t("status.paused"), code: "paused" },
+    { name: t("status.finished"), code: "finished" },
+    { name: t("status.abondoned"), code: "abondoned" },
   ]);
 
   const loadings = reactive({ get: false, save: false, remove: false });
@@ -35,13 +38,14 @@ export const useHobby = defineStore("hobby", () => {
       if (data.id) {
         await updateHobby(data);
         const index = hobbies.value.findIndex((e) => e.id === data.id);
-        if (!~index) hobbies.value[index] = data;
+        if (~index) hobbies.value[index] = data;
       } else {
         const res = await addHobby(data);
         hobbies.value.push(res);
       }
     } catch (e) {
       errors.save = e as string;
+      toast.add({ severity: "error", summary: "Save Error", detail: e });
     } finally {
       loadings.save = false;
     }
@@ -57,6 +61,7 @@ export const useHobby = defineStore("hobby", () => {
       hobbies.value.splice(index, 1);
     } catch (e) {
       errors.remove = e as string;
+      toast.add({ severity: "error", summary: "Remove Error", detail: e });
     } finally {
       loadings.remove = false;
     }

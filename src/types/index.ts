@@ -1,4 +1,7 @@
+import type { StatusList } from "@/utils/consts";
+
 export type Writable<T> = { -readonly [K in keyof T]: T[K] };
+export type StatusType = typeof StatusList[number];
 
 export interface HobbyCategory {
   id: string;
@@ -11,7 +14,7 @@ export interface Hobby {
   category: string;
   name: string;
   startDate: Date;
-  status: string;
+  status: StatusType;
 }
 
 export interface HobbyStatusLog {
