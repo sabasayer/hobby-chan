@@ -48,57 +48,42 @@ const handleSubmit = async () => {
 };
 </script>
 
-<template>
-  <form @submit.prevent="handleSubmit()">
-    <section>
-      <h3>{{ $t("Category") }}</h3>
-      <CategorySelectInput
-        v-model="$v.category.$model"
-        :class="{ 'p-invalid': $v.category.$error }"
-      />
-      <ErrorMessages v-if="submitted" :errors="$v.category.$errors" />
-    </section>
-
-    <section>
-      <h3>{{ $t("Name") }}</h3>
-      <InputText
-        v-model="$v.name.$model"
-        class="w-full"
-        :class="{ 'p-invalid': $v.name.$error }"
-      />
-      <ErrorMessages v-if="submitted" :errors="$v.name.$errors" />
-    </section>
-
-    <section>
-      <h3>{{ $t("Status") }}</h3>
-      <SelectButton
-        v-model="$v.status.$model"
-        :options="statusList"
-        option-label="name"
-        option-value="code"
-        :class="{ 'p-invalid': $v.status.$error }"
-      />
-      <ErrorMessages v-if="submitted" :errors="$v.status.$errors" />
-    </section>
-
-    <section>
-      <h3>{{ $t("StartDate") }}</h3>
-      <Calendar
-        v-model="$v.startDate.$model"
-        date-format="dd.mm.yy"
-        show-time
-        class="w-full"
-        :class="{ 'p-invalid': $v.status.$error }"
-      />
-    </section>
-
-    <div class="flex justify-content-end pt-3">
-      <PButton
-        type="submit"
-        :label="editingHobby ? $t('Update') : $t('Create')"
-        :icon="editingHobby ? 'pi pi-save' : 'pi pi-plus'"
-        :loading="loadings.save"
-      />
-    </div>
-  </form>
+<template lang="pug">
+form( @submit.prevent="handleSubmit()" )
+  section
+    h3 {{ $t("Category") }}
+    CategorySelectInput(
+      v-model="$v.category.$model"
+      :class="{ 'p-invalid': $v.category.$error }" )
+    ErrorMessages( v-if="submitted" :errors="$v.category.$errors" )
+  section
+    h3 {{ $t("Name") }}
+    InputText(
+      v-model="$v.name.$model"
+      class="w-full"
+      :class="{ 'p-invalid': $v.name.$error }")
+    ErrorMessages( v-if="submitted" :errors="$v.name.$errors" )
+  section
+    h3 {{ $t("Status") }}
+    SelectButton(
+      v-model="$v.status.$model"
+      :options="statusList"
+      option-label="name"
+      option-value="code"
+      :class="{ 'p-invalid': $v.status.$error }" )
+    ErrorMessages( v-if="submitted" :errors="$v.status.$errors" )
+  section
+    h3 {{ $t("StartDate") }}
+    Calendar(
+      v-model="$v.startDate.$model"
+      date-format="dd.mm.yy"
+      show-time
+      class="w-full"
+      :class="{ 'p-invalid': $v.status.$error }" )
+  div( class="flex justify-content-end pt-3" )
+    PButton(
+      type="submit"
+      :label="editingHobby ? $t('Update') : $t('Create')"
+      :icon="editingHobby ? 'pi pi-save' : 'pi pi-plus'"
+      :loading="loadings.save" )
 </template>

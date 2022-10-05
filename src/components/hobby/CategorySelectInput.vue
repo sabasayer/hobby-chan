@@ -21,26 +21,18 @@ const isSelected = (category: string) => props.modelValue === category;
 const select = (category: string) => emit("update:modelValue", category);
 </script>
 
-<template>
-  <div class="flex">
-    <template v-for="(categories, type, i) in groups" :key="type">
-      <Divider v-if="i" layout="vertical" />
-      <div>
-        <label>{{ type }}</label>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <Chip
-            v-for="category in categories"
-            :key="category.name"
-            :label="category.name"
-            :class="{
-              'bg-gray': isSelected(category.name),
-              'bg-white': !isSelected(category.name),
-            }"
-            class="cursor-pointer border-1 border-300"
-            @click="select(category.name)"
-          />
-        </div>
-      </div>
-    </template>
-  </div>
+<template lang="pug">
+div(class="flex")
+  template(v-for="(categories, type, i) in groups" :key="type")
+    Divider(v-if="i" layout="vertical")
+    div
+      label {{ type }}
+      div(class="mt-4 flex flex-wrap gap-3")
+        Chip(
+          v-for="category in categories"
+          :key="category.name"
+          :label="category.name"
+          :class="{'bg-gray': isSelected(category.name), 'bg-white': !isSelected(category.name)}"
+          class="cursor-pointer border-1 border-300"
+          @click="select(category.name)")
 </template>

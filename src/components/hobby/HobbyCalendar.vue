@@ -35,9 +35,8 @@ const setEvents = () =>
 watch(props.hobbies, () => setEvents());
 </script>
 
-<template>
-  <div>
-    <h2>{{ $t("Calendar") }}</h2>
-    <FullCalendar :options="options" />
-  </div>
+<template lang="pug">
+div
+  h2 {{ $t("Calendar") }}
+  FullCalendar(:options="options")
 </template>

@@ -17,25 +17,19 @@ const edit = (data: Hobby) => {
 };
 </script>
 
-<template>
-  <main class="p-3">
-    <h1>{{ $t("Hobbies") }}</h1>
-    <PButton
-      @click="open"
-      :label="$t('AddNewHobby')"
-      icon="pi pi-plus"
-      class="p-button-large"
-    />
-
-    <HobbyList @edit="edit" />
-
-    <Dialog
-      v-model:visible="isModalVisible"
-      modal
-      maximizable
-      :header="$t('NewHobby')"
-    >
-      <NewHobbyForm @submitted="close" :editing-hobby="editingHobby" />
-    </Dialog>
-  </main>
+<template lang="pug">
+main(class="p-3")
+  h1 {{ $t("Hobbies") }}
+  PButton(
+    @click="open"
+    :label="$t('AddNewHobby')"
+    icon="pi pi-plus"
+    class="p-button-large")
+  HobbyList(@edit="edit")
+  Dialog(
+    v-model:visible="isModalVisible"
+    modal
+    maximizable
+    :header="$t('NewHobby')")
+    NewHobbyForm(@submitted="close" :editing-hobby="editingHobby")
 </template>

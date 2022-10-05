@@ -39,46 +39,34 @@ const statusList = computed<MenuItem[]>(() =>
 );
 </script>
 
-<template>
-  <Card>
-    <template #header>
-      <h2 class="px-3 pt-3 text-gray-600">
-        {{ data.name }}
-      </h2>
-    </template>
-    <template #content>
-      <div :class="{ 'flex gap-3': horizontal }">
-        <div>
-          <i class="pi mr-2" :class="statusIcon"></i>
-          <span>{{ data.status }}</span>
-        </div>
-        <div>{{ data.category }}</div>
-        <div>{{ data.startDate.toDateString() }}</div>
-      </div>
-    </template>
-    <template #footer>
-      <div class="flex justify-content-end gap-3">
-        <PButton
-          class="p-button-raised p-button-text p-button-sm"
-          :label="$t('ChangeStatus')"
-          :loading="loadings.save"
-          @click="toggleMenu"
-        />
-        <Menu ref="menu" id="status_menu" popup :model="statusList" />
-        <PButton
-          icon="pi pi-file-edit"
-          :label="$t('Edit')"
-          class="p-button-raised p-button-text p-button-sm"
-          @click="edit"
-        />
-        <PButton
-          icon="pi pi-trash"
-          :label="$t('Remove')"
-          class="p-button-raised p-button-text p-button-sm"
-          :loading="loadings.remove"
-          @click="removeHobby"
-        />
-      </div>
-    </template>
-  </Card>
+<template lang="pug">
+Card
+  template( #header )
+    h2( class="px-3 pt-3 text-gray-600")  {{ data.name }}
+  template( #content )
+    div( :class="{ 'flex gap-3': horizontal }" )
+      div
+        i( class="pi mr-2" :class="statusIcon" )
+        span {{ data.status }}
+      div {{ data.category }}
+      div {{ data.startDate.toDateString() }}
+  template( #footer )
+    div( class="flex justify-content-end gap-3" )
+      PButton(
+        class="p-button-raised p-button-text p-button-sm"
+        :label="$t('ChangeStatus')"
+        :loading="loadings.save"
+        @click="toggleMenu" )
+      Menu( ref="menu" id="status_menu" popup :model="statusList" )
+      PButton(
+        icon="pi pi-file-edit"
+        :label="$t('Edit')"
+        class="p-button-raised p-button-text p-button-sm"
+        @click="edit" )
+      PButton(
+        icon="pi pi-trash"
+        :label="$t('Remove')"
+        class="p-button-raised p-button-text p-button-sm"
+        :loading="loadings.remove"
+        @click="removeHobby" )
 </template>
