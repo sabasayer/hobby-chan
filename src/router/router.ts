@@ -5,9 +5,20 @@ export const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
       component: () => import("../views/HomeView.vue"),
       meta: { requiresAuth: true },
+      children: [
+        {
+          path: "",
+          name: "home",
+          component: () => import("../views/HobbiesView.vue"),
+        },
+        {
+          path: "/calendar",
+          name: "calendar",
+          component: () => import("../views/CalendarView.vue"),
+        },
+      ],
     },
     {
       path: "/auth",

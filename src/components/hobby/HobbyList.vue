@@ -8,7 +8,7 @@ import { defineAsyncComponent, ref } from "vue";
 import HobbyCard from "./HobbyCard.vue";
 import { storeToRefs } from "pinia";
 import type { Hobby } from "@/types";
-const HobbyCalendar = defineAsyncComponent(() => import("./HobbyCalendar.vue"));
+
 const HobbyTable = defineAsyncComponent(() => import("./HobbyTable.vue"));
 
 const emit = defineEmits<{ (e: "edit", value: Hobby): void }>();
@@ -42,6 +42,6 @@ div(class="py-3")
     template(#list="{ data }")
       div(class="w-full")
         HobbyCard(:data="data" horizontal @edit="edit")
-  HobbyCalendar(v-if="hobbies.length" :hobbies="hobbies" class="mt-3")
+
   HobbyTable(v-if="hobbies.length" :hobbies="hobbies" class="mt-3")
 </template>
