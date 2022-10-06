@@ -8,7 +8,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import "./assets/main.css";
-import "primeVue/resources/themes/md-light-deeppurple/theme.css";
+import "primevue/resources/themes/md-light-deeppurple/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
